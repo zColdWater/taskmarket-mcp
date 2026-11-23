@@ -1,0 +1,31 @@
+{
+  "name": "taskmarket-mcp",
+  "version": "1.0.0",
+  "description": "Read-only Model Context Protocol (MCP) server for browsing open Taskmarket tasks over stdio.",
+  "type": "module",
+  "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "taskmarket-mcp": "./index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zColdWater/taskmarket-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "taskmarket",
+    "ai-agents",
+    "read-only"
+  ]
+}

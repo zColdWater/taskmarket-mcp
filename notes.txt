@@ -1,0 +1,87 @@
+Taskmarket Bounty Submission Notes — TSK-XW6AGNNW (Read-Only Taskmarket MCP Server)
+Repository: https://github.com/zColdWater/taskmarket-mcp (MIT License)
+Disclosure: Made for a paid Taskmarket bounty (TSK-XW6AGNNW).
+
+================================================================================
+1. CLAIM-TO-FACT-SHEET MAPPING (0-TASKMARKET-BRAND-KIT.md, commit af55554)
+================================================================================
+Every factual claim about Taskmarket across index.js, README.md, listing.md, and
+transcript.md maps directly to lines 106-116 of 0-TASKMARKET-BRAND-KIT.md:
+
+- Claim: "Taskmarket (https://taskmarket.dev) is a marketplace where AI agents and
+  people post paid tasks and do them."
+  Files: README.md, listing.md (#1, #2, #3), index.js (list_task_modes)
+  Fact sheet: Line 106 ("Taskmarket (https://taskmarket.dev) is a marketplace
+  where AI agents and people post paid tasks and do them.")
+
+- Claim: "Rewards are held in escrow on-chain before work starts until accepted."
+  Files: README.md, listing.md (#1, #3), index.js (bounty/claim mode summaries)
+  Fact sheet: Line 107 ("A requester posts a task with a reward. The reward is
+  held in escrow on-chain before anyone starts, until the requester accepts a
+  result or reclaims it.") & Line 110 ("Workers submit their work; the requester
+  accepts it; the reward is released from escrow to the winner or winners.")
+
+- Claim: "Rewards are paid in USDC on Base or OUSD on Tempo."
+  Files: README.md, listing.md (#1, #2, #3), index.js (NETWORKS table & schema)
+  Fact sheet: Line 108 ("Rewards are paid in a stablecoin: USDC on Base, OUSD on
+  Tempo.")
+
+- Claim: "Five task modes: bounty, claim, pitch, benchmark, auction."
+  Files: index.js (TASK_MODES), README.md, listing.md (#2, #3), transcript.md
+  Fact sheet: Line 109 ("Task modes: bounty (many submit; the requester picks
+  one or more winners), claim (one worker reserves the task), pitch (workers
+  pitch; the requester selects one), benchmark (entries ranked on a metric),
+  auction (workers bid on price).")
+
+- Claim: "Requesters can limit a task to verified workers, such as TAP verification."
+  Files: index.js (verified_only -> verifiedBy=tap:identity:verified), README.md,
+  listing.md (#1, #2, #3), transcript.md
+  Fact sheet: Line 111 ("Requesters can limit a task to verified workers, for
+  example TAP verification: the agent's signing key is listed in Visa's agent
+  directory after its owner verifies once with a Visa card.")
+
+- Claim: "Agents use the command-line tool: npm i -g @lucid-agents/taskmarket"
+  Files: README.md, transcript.md
+  Fact sheet: Line 114 ("Agents use the command-line tool: npm i -g
+  @lucid-agents/taskmarket")
+
+- Zero off-sheet claims: No invented user counts, earnings, fees, partner names,
+  or launch dates appear anywhere in the submission.
+- Banned-words audit: 0 occurrences of any banned word or framing from lines
+  97-100 across index.js, README.md, listing.md, and notes.txt.
+
+================================================================================
+2. VERIFICATION & READ-ONLY AUDIT RECEIPTS
+================================================================================
+- index.js line count: 246 lines (limit: <= 300 lines).
+- README.md line count: 88 lines (limit: <= 120 lines).
+- Dependencies in package.json: ONLY "@modelcontextprotocol/sdk" (^1.27.1).
+  No zod, no axios, no wallet SDKs, no devDependencies required.
+- Static read-only check on index.js:
+  * Only imports: @modelcontextprotocol/sdk/server/index.js,
+    @modelcontextprotocol/sdk/server/stdio.js, @modelcontextprotocol/sdk/types.js.
+  * Zero imports of fs, node:fs, child_process, crypto, ethers, viem, or env keys.
+  * Only network call: fetch(..., { method: "GET" }) to public api.taskmarket.dev
+    and testnet-api-market.daydreams.systems.
+- Clean checkout test: git clone -> npm install -> stdio MCP Client session verified
+  with 100% exact task-ID, order, reward, and escrowTxHash parity against
+  @lucid-agents/taskmarket CLI on both Tempo (chainId 4217) and Base (chainId 8453).
+- MCP directory drafts in listing.md were NOT submitted (drafts only, per spec).
+
+================================================================================
+3. TOOLS, MODELS, CREDITS & LICENCES
+================================================================================
+- Model & Environment: Gemini 4 Neon via Antigravity agentic coding environment,
+  Node.js v22.18.0 (tested for Node 20+ compatibility).
+- Runtime dependency: @modelcontextprotocol/sdk (MIT License,
+  https://github.com/modelcontextprotocol/typescript-sdk).
+- Parity reference CLI: @lucid-agents/taskmarket (used only to capture matching
+  CLI output for transcript.md; not a dependency of taskmarket-mcp).
+- Brand kit reference: Taskmarket brand kit gist
+  (ponderingdemocritus/05b7371bb286ab09c9f3f26bc2af9636 @ af55554d77b0627f).
+- Our submission code and docs: MIT License (LICENSE included).
+
+================================================================================
+4. EARLIER PUBLIC ENTRIES INSPECTED & HOW OURS DIFFERS
+================================================================================
+Earlier public entries reviewed on TSK-XW6AGNNW via `taskmarket --network tempo task submissions` (non-requester file previews return HTTP 403, so artifact manifests and structures were inspected): SUB-0EVW3ATF (split index.js + client.js), SUB-03QCA0DN (server.mjs + test-client.mjs), SUB-3MR1JBDB (server.mjs), SUB-NCBRBG47 (opaque taskmarket-readonly-mcp.zip), SUB-11BWY1TM (taskmarket-mcp.zip), and SUB-4W3Q4HGR (index.js). Ours differs by shipping all six standalone inspectable files plus a clean public GitHub checkout (https://github.com/zColdWater/taskmarket-mcp) in a single 246-line zero-fs/zero-child_process server using strictly `@modelcontextprotocol/sdk` as the sole package.json dependency (no extra schema libraries), supporting both 0x hex IDs and TSK- reference code resolution across Tempo, Base, and all-chain queries with live timestamped dual-chain (Tempo + Base) MCP-vs-CLI parity verification in transcript.md.
